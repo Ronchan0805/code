@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS的深浅拷贝</title>
+</head>
+<body>
+  <script>
+    // 一般深拷贝 - (不适用对象内部再包含对象)
+    function copy(obj) {
+      var res = {};
+      for(var atr in obj) {
+        res[atr] = obj[atr];
+      }
+      return res;
+    }
+    var obj1 = { name: 'ronchan'};
+    var obj2 = copy(obj1);
+    obj1.name = 'RonChan';
+    alert(obj2.name); // ronchan
+    
+    // 对象的深拷贝
+    function copyDeep(obj) {
+      var res = {};
+      for(var atr in obj) {
+        if(Object.prototype.toString.call(obj[atr]) == '[object Obejct]') {
+          res[atr] = copy(obj[atr]);
+        } else {
+          res[atr] = obj[atr];
+        }
+      }
+      return res;
+    }
+    
+    // JSON.stringfy和JSON.parse
+    
+    /*
+      缺点: let obj = {
+        arr: [1,2],
+        obj: {name: 'ronchan'},
+        func: () => {console.log('ronchan')},
+        date: new Date(),
+        reg: /reg/ig
+      }
+    */
+  </script>
+</body>
+</html>
