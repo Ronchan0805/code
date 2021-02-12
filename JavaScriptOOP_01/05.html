@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原型</title>
+</head>
+<body>
+  <script>
+    function Myfunction () {
+      this.name = 'ronchan';
+      return this;
+    }
+    var obj = new Myfunction();
+    alert(obj.constructor); // 指向构造函数
+    alert('name' in obj); // true - in操作符查找对象属性
+  </script>
+</body>
+</html>

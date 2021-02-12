@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>继承</title>
+</head>
+<body>
+  <script>
+    function Parent () {
+      this.name = "ronchan";
+      return this;
+    }
+    Parent.prototype.showName = function () {
+      console.log(this.name);
+    }
+    function Child () {
+      Parent.call(this);  /**/
+      this.sex = 'man';
+    }
+    extend(Child,Parent);
+    Child.prototype.showSex = function () {
+      console.log(this.sex);
+    }
+    function extend (subs,sups) {
+      // 避免直接赋值 - 造成对象的引用
+      for(var atr in sups.prototype) {
+        subs.prototype[atr] = sups.prototype[atr];
+      }
+    }
+
+    var obj1 = new Parent();
+    var obj2 = new Child();
+    console.log(obj1);
+    console.log(obj2);
+  </script>
+</body>
+</html>

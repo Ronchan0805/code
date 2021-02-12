@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag</title>
+  <style>
+    #box {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      position: relative;
+      cursor: grab;
+    }
+  </style>
+</head>
+<body>
+  <div id="box"></div>
+  <script>
+    function Drag (id) {
+      this.moveX = 0;
+      this.moveY = 0;
+      this.ele = document.getElementById(id);
+    }
+    Drag.prototype.init = function () {
+      var that = this;
+      this.ele.onmousedown = function (e) {
+        that.fnDown(e);
+        document.onmousemove = function (e) {
+          that.fnMove(e);
+        };
+        document.onmouseup = function () {
+          that.fnUp();
+        }
+        return false;
+      }
+    }
+    Drag.prototype.fnDown = function (e) {
+      this.moveX = e.pageX - this.ele.offsetLeft;
+      this.moveY = e.pageY - this.ele.offsetTop;
+    }
+    Drag.prototype.fnMove = function (e) {
+      this.ele.style.left = e.pageX - this.moveX + 'px';
+      this.ele.style.top = e.pageY - this.moveY + 'px';
+    }
+    // 松开鼠标置空事件 - 使得下一次继续触发
+    Drag.prototype.fnUp = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
+    var drag = new Drag('box');
+    drag.init();
+  </script>
+</body>
+</html>
