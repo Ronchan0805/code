@@ -1,0 +1,8 @@
+一、react开发环境的搭建
+  1. react.js  核心文件
+  2. react-dom.js   渲染页面中的DOM，依赖于react.js
+  3. babel.js  转译ES6,JSX
+
+  npm i react --save 
+  npm i react-dom --save
+  npm i babel-standalone --save
