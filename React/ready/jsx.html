@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="node_modules/react/umd/react.development.js"></script>
+  <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+  <script src="node_modules/babel-standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    //1.JSX注释
+    let Dom_one = <div>我是{/*ronchan*/}</div>;
+
+    //2.多行标签 - 需有一个父元素包裹、JSX中对于多行语法，使用()括号包裹
+    let Dom_two = (<div>
+                  <div>row1</div>
+                  <div>row2</div>
+                </div>);
+    
+    //3.JSX中使用表达式 - {}包裹
+    let str = "hello world";
+    let num = 1;
+    let Dom_three = <div>{str}</div>;
+    let Dom_four = <div>{num + 1}</div>;
+    
+    //4.JSX中使用函数 - 同上
+    function printf (param) {
+      return param;
+    }
+    let Dom_five = <div>{printf(str)}</div>;
+
+    //5.JSX中渲染数组 - 数组中可以包含标签
+    let arr = [
+      <p>选项一</p>,
+      <p>选项二</p>,
+      <p>选项三</p>
+    ];
+    let Dom_six = <div>{arr}</div>;
+
+    //6.属性设置
+    let text = "点击跳转";
+    let url = "http://www.ronchan.wang";
+    let Dom_seven = <a href={url}>{text}</a>;
+
+    //7.标签样式 - style变量是一个对象、background-color去掉'-'用驼峰写法
+    //JSX中不能使用class属性， - class为关键字，取而代之使用className
+    let style = {color:'red',backgroundColor:'yellow'};
+    let Dom_eight = <p style={style}>文本内容</p>;
+
+
+    ReactDOM.render(Dom_eight,document.getElementById('app'));
+  </script>
+</body>
+</html>

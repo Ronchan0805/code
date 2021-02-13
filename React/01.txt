@@ -6,3 +6,5 @@
   npm i react --save 
   npm i react-dom --save
   npm i babel-standalone --save
+
+二、JSX中使用表达式时放入{}中
