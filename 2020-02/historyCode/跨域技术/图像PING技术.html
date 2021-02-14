@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图像PING跨域技术</title>
+    <script type="text/javascript">
+        function req() {
+            let img = new Image();
+            img.onload = function () {
+                console.log('onload--请求')
+            };
+            img.onerror =function() {
+                console.log('onerror--请求')
+            }
+            img.src='http://localhost:3000/';
+            console.log(img);
+        }
+    </script>
+</head>
+<body>
+    <p>图像PING只能发起get请求，且无法接收服务器响应</p>
+    <b>js关于img标签的UI事件load和error：</b>
+    <p>
+        load:当图像加载完毕时在img元素上触发
+    </p>
+    <p>
+        error:当无法加载图像时在img元素上触发
+    </p>
+    <p>本例src地址非图片地址，走error事件</p>
+<button onclick="req()">请求</button>
+</body>
+</html>

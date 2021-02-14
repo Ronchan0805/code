@@ -12,21 +12,25 @@
 <body>
   <div id="app"></div>
   <script type="text/babel">
-    let arr = ['选项一','选项二','选项三'];
-    let active = 0;
-    function run () {
-      let dom = arr.map((item,index) => {
-        /*点击事件用驼峰命名法*/
-        return (
-          <p style={{color:active===index?'red':''}} key={index} onClick={() => {active=index;render()}}>{item}</p>
-        )
-      });
-      return dom;
-    }
-    function render () {
-      ReactDOM.render(run(),document.getElementById('app'));
-    }
-    render();
+    let obj = {
+      name: 'ronchan',
+      sex: 'man',
+      age: 23
+    };
+    Object.keys(obj); // ['name','sex','age']
+    Object.values(obj); // ['ronchan','man',23]
+    let dom = (<div>
+                {Object.keys(obj).map((item,index) => {
+                  return <p>attributeName:{item}------attributeValue:{obj[item]}</p>
+                })}
+              </div>);
+    ReactDOM.render(dom,document.getElementById('app'));
+
+    /*
+      对象属性的两种写法：
+            obj.name
+            obj["name"]
+    */
   </script>
 </body>
 </html>

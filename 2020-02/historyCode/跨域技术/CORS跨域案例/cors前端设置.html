@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>123456</title>
+    <script type="text/javascript">
+        function add() {
+            var ip = window.location.host;
+            var xhr = new XMLHttpRequest(); // IE8/9需用window.XDomainRequest兼容
+            // 前端设置是否带cookie
+            // xhr.withCredentials = true;
+            xhr.open('post', 'http://localhost:8080/', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(ip);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    alert(xhr.responseText);
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <button onclick="add()">请求</button>
+</body>
+</html>

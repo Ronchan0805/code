@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vue原理</title>
+</head>
+<body>
+    <p id="text"></p>
+    <script type="text/javascript">
+    var a = {
+        age:18
+    };
+    var obx = document.getElementById('text');
+    obx.innerHTML = a.age;
+
+    Object.defineProperty(a,'hisage',{
+        get(){
+            return this.age;
+        },
+        set(newdata){
+            this.age = newdata;
+            obx.innerHTML = this.age;
+        }
+    });
+    </script>
+</body>
+</html>

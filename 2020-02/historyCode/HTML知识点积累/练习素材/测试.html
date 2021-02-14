@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+var list = [];
+function loadXMLDoc()
+{
+    var xhr;
+    if (window.XMLHttpRequest)
+    {
+        //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xhr=new XMLHttpRequest();
+    }
+    else
+    {
+        // IE6, IE5 浏览器执行代码
+        xhr=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhr.onreadystatechange=function()
+    {
+        if (xhr.readyState==4 && xhr.status==200)
+        {
+            // document.getElementById("myDiv").innerHTML=xhr.responseText;
+            list = xhr.responseText;
+            console.log(list);
+            // for(var i = 0; i < list.length; i++){
+            //     var node = document.createElement("a");
+            //     node.download = list[i].title;
+            //     document.body.appendChild(node);
+            // }
+        }
+    }
+    xhr.open("GET","http://localhost:3000/proxy",true);
+    xhr.send(null);
+}
+</script>
+</head>
+<body>
+
+<div id="myDiv">
+    后台设置了代理，这里请求的是我的服务器
+</div>
+<button type="button" onclick="loadXMLDoc()">修改内容</button>
+
+</body>
+</html>

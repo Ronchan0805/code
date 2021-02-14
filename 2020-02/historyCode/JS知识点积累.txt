@@ -1,0 +1,41 @@
+    1.遍历
+        数组
+            for循环
+            for...in
+            foreach
+            for...of
+
+        对象
+            for...in
+
+        set  for...of
+        map  for...of
+
+            部分例子：  
+                var arr = [10,20,30,40,50];
+
+                arr.forEach(function(item,index){
+                    document.write(item + index);
+                })
+
+                for(var i in arr){
+                    doument.write(arr.[i]);
+                }
+
+                for(var item of arr){
+                    document.write(item);
+                }
+                数组遍历for..in 是遍历下标，for..of则是直接遍历到元素
+                        forEach遍历参数是一个函数，函数中第一个参数表示遍历到的元素
+                                                    第二个参数表示遍历到的元素下标
+
+                    对于对象的for..in遍历，拿到的是对象的属性，可通过对象.对象属性拿到整体：例子
+                            var obj = {
+                                name:'ron',
+                                age:18,
+                                sex:'男'
+                            }
+                            for( var data in obj ){
+                                document.write('对象'+data + obj[data]);
+                            }
+

@@ -8,3 +8,5 @@
   npm i babel-standalone --save
 
 二、JSX中使用表达式时放入{}中
+
+三、React组件的三大部分： props属性、state状态、生命周期

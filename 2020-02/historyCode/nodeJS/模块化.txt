@@ -1,0 +1,56 @@
+什么叫模块
+    一个js文件就是一个模块，每个模块都有自己的独立作用域  模块作用域
+
+模块化
+    在一个js文件中引入另一个js文件
+
+模块化规范
+    前端
+        require.js  AMD 
+        sea.js      CMD
+
+    后端
+        common.js
+
+        引入      require
+        暴露      module.exports / exports    使用module.exports做暴露
+        标识符    module
+
+
+
+    包
+        把一些模块整合在一起统一管理
+
+        系统模块包  安装的时候已经放在C盘
+
+        第三方包 一般放在node_modules
+
+        自定义包
+
+    包的特性
+        根目录要求有package.json 文件
+            name    包名
+            version 版本号
+            main    入口文件
+
+        src | lib 放源码
+        doc       说明文档
+        text      测试文件
+
+    npm
+        npm是包的管理工具
+        npm是一个专门存放第三方包的网站
+
+    中间件
+
+        中间件是一个普通的函数
+
+        该函数有三个主要的参数 req res next
+
+        中间件需要使用 use 执行
+
+        中间件需要按照先后顺序执行
+
+        中间件中的 req 是共享的
+
+        中间件的下一个中间件想要执行，则上一个中间件一定要执行next

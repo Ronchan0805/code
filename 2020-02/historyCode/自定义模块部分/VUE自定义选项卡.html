@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>选项卡</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <style>
+      .active {
+        color: red;
+      }
+
+      .activatedOne {
+        width: 200px;
+        height: 200px;
+        background: #ccc;
+        border: 1px solid #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <btn-item @click.native="handleItemChange(index)" v-for="(item,index) in btnList" :item="item" :class="{active: index===nowIndex}"></btn-item>
+      <div-item v-for="(item,index) in divList" :item="item" class="activatedOne" v-show="nowIndex===index"></div-item>
+    </div>
+
+    <script>
+      var btnItem = {
+        props: ['item'],
+        template: '<button>{{item}}</button>'
+      }
+
+      var divItem = {
+        props: ['item'],
+        template: '<div>{{item}}</div>'
+      }
+
+      var vm = new Vue({
+        el: '#root',
+        components: {
+          btnItem,
+          divItem
+        },
+        data: {
+          btnList: ['教育','培训','招生','出国'],
+          divList: [111,222,333,444],
+          nowIndex: 0
+        },
+        methods: {
+          handleItemChange(index) {
+            this.nowIndex = index
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

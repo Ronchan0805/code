@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        .box {
+            margin: 150px auto;
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+        }
+        .box img {
+            display: block;
+            width: 64px;
+            height: 64px;
+            position: relative;
+            top: 50%;
+            margin-top: -32px;
+            left: 50%;
+            margin-left: -32px;
+        }
+        .box:hover img{
+            animation-name: mygif;
+            animation-duration: 0.3s;
+        }
+        @keyframes mygif {
+            0% {
+                transform: translate(0,0);
+            }
+            50% {
+                transform: translate(0,-80px);
+            }
+            51% {
+                transform:translate(0,80px);
+            }
+            100% {
+                transform: translate(0,0);
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <img src="http://172.81.252.202:3000/website/%E5%8F%AF%E5%9B%9E%E6%94%B6%E7%89%A9-%E7%89%9B%E5%A5%B6%E7%9B%92.png">
+    </div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+ ----跨域源于"同源策略"
+
+        常见跨域场景：
+            http:/\/www.domain.com:8000/a.js
+            http:/\/www.domain.com/b.js            同一域名，不同端口      
+
+
+            http:/\/www.domain.com/a.js
+            https:/\/www.domain.com/b.js           同一域名，不同协议                    
+
+            http:/\/www.domain.com/a.js
+            http:/\/192.168.4.12/a.js              域名和域名对应相同ip           
+
+            http:/\/www.domain.com/a.js
+            http:/\/x.domain.com/b.js              主域相同，子域不同            
+            http:/\/domain.com/c.js
+ 
+            http:/\/www.domain1.com/a.js
+            http:/\/www.domain2.com/b.js           不同域名                         
+
+
+
+                http://www.domain.com/a.js
+                http://www.domain.com/b.js             同一域名，不同文件或路径           允许跨域
+                http://www.domain.com/lab/c.js
+
+
+
+        跨域解决方案：
+
+            1、 通过jsonp跨域
+            2、 document.domain + iframe跨域
+            3、 location.hash + iframe
+            4、 window.name + iframe跨域
+            5、 postMessage跨域
+            6、 跨域资源共享（CORS）
+            7、 nginx代理跨域
+            8、 nodejs中间件代理跨域
+            9、 WebSocket协议跨域
+
+
+
+        1.jsonp跨域(动态创建script元素)
+
+            --原生实现
+             <script>
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+
+                // 传参一个回调函数名给后端，方便后端返回时执行这个在前端定义的回调函数
+                script.src = 'http://www.domain2.com:8080/login?user=admin&callback=handleCallback';
+                document.head.appendChild(script);
+
+                // 回调执行函数
+                function handleCallback(res) {
+                    alert(JSON.stringify(res));
+                }
+             </script>
+
+             --服务器返回如下 (服务器返回时即执行全局函数)
+                handleCallback({"status": true, "user": "admin"})
+
+
+            --jquery ajax：
+                $.ajax({
+                    url: 'http://www.domain2.com:8080/login',
+                    type: 'get',
+                    dataType: 'jsonp',  // 请求方式为jsonp
+                    jsonpCallback: "handleCallback",    // 自定义回调函数名
+                    data: {}
+                });
+
+
+            --vue.js：
+                this.$http.jsonp('http://www.domain2.com:8080/login', {
+                    params: {},
+                    jsonp: 'handleCallback'
+                }).then((res) => {
+                    console.log(res); 
+                })
+
+
+            后端node.js代码示例：
+            var querystring = require('querystring');
+            var http = require('http');
+            var server = http.createServer();
+
+            server.on('request', function(req, res) {
+                var params = qs.parse(req.url.split('?')[1]);
+                var fn = params.callback;
+
+                // jsonp返回设置
+                res.writeHead(200, { 'Content-Type': 'text/javascript' });
+                res.write(fn + '(' + JSON.stringify(params) + ')');
+
+                res.end();
+            });
+
+            server.listen('8080');
+            console.log('Server is running at port 8080...');
+
+            jsonp缺点：只能实现get一种请求。
+
+
+        2. 3. 4. 5. 略
+
+        6.CORS 
+
+            普通跨域请求：只服务端设置Access-Control-Allow-Origin即可，前端无须设置，若要带cookie请求：前后端都需要设置。
+            目前，所有浏览器都支持该功能(IE8+：IE8/9需要使用XDomainRequest对象来支持CORS）)，CORS也已经成为主流的跨域解决方案。
+                前端设置：略
+                服务端设置：
+                    若后端设置成功，前端浏览器控制台则不会出现跨域报错信息，反之，说明没设成功。
+
+                    -- nodejs后台：
+                    server.on('request', function(req, res) {
+                        var postData = '';
+
+                        // 数据块接收中
+                        req.addListener('data', function(chunk) {
+                            postData += chunk;
+                        });
+                        // 数据接收完毕
+                        req.addListener('end', function() {
+                            postData = qs.parse(postData);
+
+                            // 跨域后台设置
+                            res.writeHead(200, {
+                                'Access-Control-Allow-Credentials': 'true',     // 后端允许发送Cookie
+                                'Access-Control-Allow-Origin': 'http://www.domain1.com',    // 允许访问的域（协议+域名+端口）
+                                /* 
+                                 * 此处设置的cookie还是domain2的而非domain1，因为后端也不能跨域写cookie(nginx反向代理可以实现)，
+                                 * 但只要domain2中写入一次cookie认证，后面的跨域接口都能从domain2中获取cookie，从而实现所有的接口都能跨域访问
+                                 */
+                                'Set-Cookie': 'l=a123456;Path=/;Domain=www.domain2.com;HttpOnly'  // HttpOnly的作用是让js无法读取cookie
+                            });
+
+                            res.write(JSON.stringify(postData));
+                            res.end();
+                        });
+                    });
+
+
+
+        7.nginx代理跨域
+            跨域原理： 同源策略是浏览器的安全策略，不是HTTP协议的一部分。服务器端调用HTTP接口只是使用HTTP协议，不会执行JS
+                      脚本，不需要同源策略，也就不存在跨越问题。
+
+
+            #proxy服务器
+                server {
+                    listen       81;
+                    server_name  www.domain1.com;
+
+                    location / {
+                        proxy_pass   http://www.domain2.com:8080;  #反向代理
+                        proxy_cookie_domain www.domain2.com www.domain1.com; #修改cookie里域名
+                        index  index.html index.htm;
+
+                        //当用webpack-dev-server等中间件代理接口访问nignx时，此时无浏览器参与，故没有同源限制，下面的跨域配置可不启用
+                        add_header Access-Control-Allow-Origin http://www.domain1.com;  //当前端只跨域不带cookie时，可为*
+                        add_header Access-Control-Allow-Credentials true;
+                    }
+                }
+            
+            1.) 前端代码示例：
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            // 访问nginx中的代理服务器
+            xhr.open('get', 'http://www.domain1.com:81/?user=admin', true);
+            xhr.send();
+
+            2.) Nodejs后台示例：
+            var http = require('http');
+            var server = http.createServer();
+            var qs = require('querystring');
+
+            server.on('request', function(req, res) {
+                var params = qs.parse(req.url.substring(2));
+
+                // 向前台写cookie
+                res.writeHead(200, {
+                    'Set-Cookie': 'l=a123456;Path=/;Domain=www.domain2.com;HttpOnly'   // HttpOnly:脚本无法读取
+                });
+
+                res.write(JSON.stringify(params));
+                res.end();
+            });
+
+            server.listen('8080');
+            console.log('Server is running at port 8080...');
+
+
+
+        8.Nodejs中间件代理跨域(略)
+        9.Vue框架代理跨域(略)
+
+
+        

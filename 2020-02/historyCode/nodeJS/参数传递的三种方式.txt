@@ -1,0 +1,78 @@
+参数传递的三种方式
+    get  2种
+
+        http://127.0.0.1:3000/api?name=chan&age=18
+        req.query.name
+        req.query.age
+
+        http://127.0.0.1:3000/api/chan/18
+        需要在后台占位  例app.get('/api/:name/:age',(req,res)=>{console.log(req.params)})
+        req.params.name
+        req.params.age
+
+    post 1种
+
+        1.自己封装了 bodyParser 通过req.body
+
+        2.使用第三方的中间件 bodyParser  req.body
+
+
+服务端渲染   SSR
+    把服务端的数据和页面结合完毕之后 给客户端返回整个页面
+
+    引擎模板
+
+    art-template
+
+    1.引入安装好的 art-template
+
+    2.把数据和页面结合
+
+    3.使用res.end() 返回处理的内容给 客户端
+
+    ejs
+
+    1.安装ejs
+
+    2.设置引擎模板的类型和模板的位置
+
+    3.使用res.render 返回数据
+
+客户端渲染   SPA  （单页面应用）
+    通过ajax请求后台接口，把数据和某个代码片段结合，拼接到页面
+    局部 异步 刷新
+
+
+路由      
+    路由是一种对应关系
+
+    后端路由    前端请求的url路径 和 后端对该路径的处理函数的对应关系
+    前端路由
+
+
+express生成器
+
+
+使用apidoc生成接口文档
+    1.安装
+    npm install apidoc -g
+
+    2.项目的根目录下新建apidoc.json文件 添加代码（见官网）
+
+    3.在需要生成接口文档的接口上面添加注解
+
+    /**
+     * @api {get} /user/:id Request User information
+     * @apiName GetUser
+     * @apiGroup User
+     *
+     * @apiParam {Number} id User's unique ID.
+     *
+     * @apiSuccess {String} firstname Firstname of the User.
+     * @apiSuccess {String} lastname  Lastname of the User.
+     */
+
+     4.运行命令生成文档
+     -i 以哪个文件夹生成
+     -o 生成到哪个文件
+     apidoc -i ./router -o ./apidoc

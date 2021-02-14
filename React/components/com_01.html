@@ -12,28 +12,18 @@
 <body>
   <div id="app"></div>
   <script type="text/babel">
-    //  react列表渲染 - map()方法
-    let arr = [1,2,3];
-    let myDom = arr.map((item,index) => {
-      // 需要设置key
-      return <p key={index}>{item}</p>;
-      // // 换行时 - 使用()
-      // return (
-      //   <p key={index}>{item}</p>
-      // );
-    });
-
-    // 其他方法,例for in
-    let narr = ['one','two','three'];
-    function run () {
-      let arr = [];
-      for(let i in narr) {
-        arr.push(<p key={i}>{narr[i]}</p>)
-      }
-      return arr;
+    // 无状态组件的定义 - 必须采用大驼峰命名,eg:RunFunc()
+    function Run () {
+      return (
+        <div>无状态组件</div>
+      );
     }
-
-    ReactDOM.render(run(),document.getElementById('app'));
+    let dom = (
+      <div>
+        <Run></Run><Run></Run>
+      </div>
+    );
+    ReactDOM.render(dom,document.getElementById('app'));
   </script>
 </body>
 </html>

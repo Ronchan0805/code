@@ -1,0 +1,479 @@
+    
+    --层次选择器
+    1.后代 M N{}
+    2.父子 M > N{}
+    3.兄弟 M ~ N{} 当前M下的所有兄弟N标签
+                            例：<p></p>       div ~ p {} ,则:第一行p不起效
+                                <div></div>
+                                <p></p>
+                                <p></p>
+    4.相邻 M + N{} 在当前M下方的且紧密相邻的N标签
+                            例子同上           div + p {} ,则:只有第三行起效
+
+    --属性选择器
+      M[attr] { }       例：div[class]    div[class=a](完全匹配)    div[class*=a](部分匹配)
+
+    --伪类选择器
+      :link         访问前的样式
+      :visited      访问后的样式
+        //上面两个仅针对a能用，下面对所有标签都能用
+      :hover        鼠标移入的样式
+      :active       鼠标按下时的样式
+            注：1.如果四个伪类都用，注意顺序L V H A
+                2.不仅可以用成 div:hover{ }, 也可 .cssone:hover{ }
+
+        拓展:
+        :after  :before 通过伪类的方式给元素添加一些文本内容,使用content属性（在前或在后面添加）
+                            例： <div>Ron</div>
+                                div:after{
+                                    content:'chan'
+                                }
+                            则实际显示为 Ronchan，同样before为chanRon
+        :checked :disabled :focus 等用于表单样式
+
+    --结构伪类选择器
+        例:
+            li:nth-of-type(2n+1){ background:red; }  /*不受其中是否插入其他类型元素影响*/
+
+            li:nth-child(2){ background:yellow; }   /*其中若插入其他元素，则会有不同效果*/
+                    关于以上两种方式括号内的值:
+                        n  所有的li都亮
+                        2n 偶数位置的li亮
+                        2n+1/2n-1 奇数位置的li亮
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            。。。。。（略）
+
+
+    --CSS样式继承
+        文字相关的样式默认继承
+        布局相关的样式默认不继承（可通过inherit改变）
+
+    --CSS优先级
+           -单一样式优先级:
+            style行内 > id > class > tag > * > inherit
+            权重 1000     > 100 > 10    > 1 >*,inherit更小 (同上方对应)
+
+           -！important;提升优先级，权重无限大，但不建议使用
+
+           -标签+类写法(div.aaa) > 类写法（.aaa）
+
+           -群组选择器优先级（div,p) 与单一选择器（div） 优先级相同，靠后写的更高
+
+           -层次优先级
+                1.权重比较
+                    例：
+                                                 总权重分布
+                    ul li .aaa #box input {}    1,1,10,100,1        比较规则：100多的优先级高；
+                                                                            若100数量一样，10多的优先级高
+                                                                            若10数量也一样，1多的优先级高
+                                                                            若1数量一样，不比较了，写在后面的优先级高
+                    #box .aaa input {}          100,10,1      
+
+
+
+    --css盒子模型
+            --盒子加背景色还会填充到边框区域！！,但盒子边框不设置背景色默认是黑色,可以设置边框为transparent即可看到效果
+            --box-sizing: 取值 :content-box(默认值)|border-box
+                                content-box:   width,height ->content
+                                border-box :   width,height ->content,padding,border
+
+            --margin叠加问题:
+                        margin上下叠加，取较大值为最终值叠加；但左右不存在叠加问题
+                        解决：
+                            1.BFC规范
+                            2.只对一个元素设置margin。。。
+
+            --margin传递问题：
+                        嵌套结构中，针对margin-top会出现margin传递问题
+                        (子元素设置margin-top会自动传递给父元素，即父元素有了margin-top值)
+                        解决：
+                            1.BFC规范
+                            2.给父容器加边框
+                            3.给父元素设置padding替换子元素设置margin
+
+            --margin扩展(子盒相对父盒子左右居中)：
+
+                        给子盒子设置margin-left:auto;，子盒子相对父盒子靠最右显示
+                                   margin-right:auto;，子盒子相对父盒子靠最左显示
+
+                                故设置margin:0 auto; 子盒子相对父盒子左右居中
+
+                                以上方法对上下无用！
+
+
+            --子盒子不设置宽度，只设置高度则子盒子 "宽" 会自动计算以恰好撑满父盒子，节省代码。
+                                                                |
+                                                                |
+                                                                |
+    --html标签分类                                               |
+        block 块              div p ul li..                     |
+            特性：1.独占一行   2.不设置宽时宽会与父容器相同---------|
+                  3.支持所有样式  
+
+
+        inline 内联           span a img..
+
+            特性： 1.一行显示
+
+                  2.不支持width,height,margin,padding(部分不支持)
+
+                  3.不设置宽时宽度由内容决定
+
+                  4.如果两个标签写成两行，内联元素之间会有空隙（换行产生）
+                        解决：两个内联标签的父标签设置font-size:0px;再分别根据需要再两个内联标签里
+                                设置font-size属性
+
+
+        inline-block 内联块   input select..
+
+            特性：1.一行显示
+                  2.支持宽高
+
+        --显示框类型
+                display : 
+                    block
+                    inline
+                    inline-block
+                    none
+
+                注意：display:none; 与 visibility:hidden;
+                     不占空间的隐藏  与   占空间的隐藏
+
+
+    --overflow溢出隐藏:
+            visible(默认)
+            hidden
+            scroll
+            auto
+            针对X,Y轴： overflow-x, overflow-y
+
+
+
+    --CSS透明度与手势:
+        透明：
+        1.opacity: 0(透明) ~ 1(不透明);
+        2.rgba();             rgb()是颜色，rgba()色彩模式与rgb相同，只是在rgb模式上新增了透明度
+
+        手势：
+        cursor: pointer,move..... 默认值是default
+
+                自定义手势
+                    1.图片格式要求： .cur   .ico
+                    2.用法：  cursor: url('./img.ico'),auto;
+
+
+
+    --CSS重置样式：
+        有一些元素存在原始样式，如p , h1 , body , ul , a.... 可能需要重置默认样式
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        ul{ list-style: none; }
+
+        ...
+
+        img { display:block; }  注意:img标签默认是inline 
+                                    图片和容器底部有一点空隙
+                                    内联元素的对齐方式是按照文字的基线对齐的，而不是文字底线
+                                    解决:
+                                        vertical-align:baseline; 基线对齐
+                                    如果不采用vertical-align的方式，也可直接左上设置display:block
+
+        更多详细可baidu: "reset.css"
+
+        *题外：一个好用的插件：web前端助手
+
+
+    --浮动解决方案：
+            固定宽高
+            父元素浮动
+            父元素overflow:hidden
+            父元素display:inline-block
+            父元素里设置空标签,空标签设置属性clear:both
+            父元素应用after伪类 content:'';clear:both;display:block;
+
+    --浮动原本作用实现文字环绕效果
+            子元素img嵌套于父元素，子图片img设置左浮动，img标签后直接加文字
+
+
+    --一个标签元素内添加多个背景图：
+        background: url('') repeat-x, url('') no-repeat;
+                        前面的背景图优先在上层显示
+
+
+    --CSS定位( z-index要配合定位使用才有效 )
+        static(默认)
+        relative
+        absolute
+        fixed
+        sticky
+
+            relative:
+                如果无偏移量，对元素本身无任何影响
+                不使元素脱离文档流
+                不影响其他布局
+                top right bottom left 是相对当前元素自身进行偏移
+
+            absolute:
+                -使元素脱离文档流
+                -使内联元素支持宽高(让内联具备块特性)
+                -使块元素默认宽根据内容决定(让块具备部分内联特性)
+                -如果有定位祖先元素相对于祖先元素进行偏离，没有定位祖先元素相对于整个
+                 文档进行偏离(绝对，相对，固定)
+
+            fixed:
+                -使元素脱离文档流
+                -使内联元素支持宽高(让内联具备块特性)
+                -使块元素默认宽根据内容决定(让块具备部分内联特性)
+                -相对于整个浏览器窗口进行偏移，不受浏览器滚动条的影响
+
+            sticky 兼容性问题，这里不介绍
+
+
+    --单行，多行文本显示省略号
+
+    --CSS雪碧图：
+        将许多小的图标，图片文件处理后放在同一张图片里，
+        网页布局使用的时候引用的都是同一张图片，只是通过背景图片定位手段显示需要的位置
+            -优点是可以减少HTTP请求
+
+    --CSS圆角
+        width:200px; height:200px;  border-radius:5px;
+        width:200px; height:200px;  border-radius:100px; 圆
+        width:200px; height:200px;  border-radius:10px 20px; 第一个参数表示左上和右下
+                                                             第二个表示右上和左下
+
+        width:200px; height:200px;  border-radius:5px 6px 7px 8px;
+                                                        左上，右上，右下，左下
+
+
+
+    --BFC规范  --------BFC块级格式化上下文
+
+        触发BFC：
+        -浮动元素：float 除none以外
+        -定位元素：position (absolute,fixed)
+        -display为inline-block,table-cells,flex
+        -overflow 除 visible以外的值(hidden,auto,scroll)
+
+        BFC应用
+            解决margin叠加问题、margin传递问题、浮动问题
+
+    --浏览器内核与浏览器前缀
+
+        浏览器                 内核          前缀
+        IE                    Trident       -ms-        
+        Firefox               Gecko         -moz-
+        Opera                 Presto        -o-
+        Chrome                Webkit        -webkit-
+        Safari                Webkit        -webkit-
+
+        Opera,Chrome          Blink
+
+
+    --transition过渡        -------transition属性应放在第一个样式里/前面的样式里
+
+        transition-property:规定设置过渡效果的CSS名称
+        transition-duration:规定完成过渡效果需要的时间
+        transition-delay:定义过渡效果何时开始
+        transition-timing-function:规定速度效果的速度曲线---http://cubic-bezier.com(贝茨曲线)
+
+    --transform属性   ---变形属性
+
+       可能的取值有：
+            translate:位移
+            scale:缩放
+            rotate:旋转
+            skew:斜切
+
+        写法： 
+
+        transform:translate(100px,100px)   第一个参数表示向X轴位移，第二个表示向Y轴
+               transform:translateX(100px)/translateY(100px)  只针对X或Y轴位移   
+
+        scale:缩放(值是一个比例值，正常大小就是1，会以当期元素中心点进行缩放)
+            scaleX
+            scaleY
+            scaleZ (3d效果)
+        transform:scale(2,2) 第一个表示X，第二个表示Y，这里是以中心点X,Y方向扩大2倍
+
+        rotate:旋转 (旋转的值，单位是角度 deg)
+            rotateX (3d效果)
+            rotateY (3d效果)
+            rotateZ
+
+        注意事项：
+            1.允许复合写法，即同时添加多个变形操作，但执行起来是有顺序的
+                先执行后面的操作再执行前面的操作。
+                位移transform会受到scale，rotate，skew的影响,故位移应放在其他三个属性前面
+            2.因为几种属性默认基点在中心(默认transform-origin:center center)，
+                可以通过transform-origin改变变形的基点位置
+
+    --animation动画
+        animation-name: 设置动画名字(自定义)
+        animation-duration: 动画持续时间
+        animation-delay: 动画的延迟时间
+        animation-iteration-count: 动画的重复次数,默认值是1，infinite无限次
+        animation-timing-function: 动画的运动形式
+
+        基本使用语法说明：
+            1.
+                .aa {
+                    width: 100px;
+                    height: 100px;
+                    background-color: red;
+                    animation-name: mygif;
+                    animation-duration: 4s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes mygif {
+                    0%{
+                        transform: translate(0,0);
+                    }
+                    50%{
+                        transform: translate(100px,0);
+                    }
+                    100%{
+                        transform: translate(0,100px);
+                    }
+                }
+            2.动画结束默认回到起始位置
+            3.@keyframes中可以增加更多关键帧
+        扩展：
+            animation-fill-mode: 规定动画播放之前或之后，其动画效果是否可见
+                值：none  :默认值，运动结束回到起始位置，在延迟情况下，让0%时的效果在延迟后生效
+                    backwards ：在延迟情况下，让0%时的效果在延迟前生效
+                    forwards ：在运动之后停到结束位置
+                    both ： backwards和forwards同时生效
+
+            animation-direction: 属性定义是否应该轮流反向播放动画
+                值：alternate ：一次正向运动(0%-100%)，一次反向运动(100%-0%)
+                    reverse ：永远都是反向(100%-0%)
+                    normal：默认值，永远都是正向(0%-100%)
+
+        扩展注释：某些属性需要搭配使用效果才能看到或生效，比如animation-direction需要搭配animation-iteration-count才能生效，仅一次运动情况下animation-direction不生效
+
+    --3D基本使用与成像原理
+        原理：“相机照射浏览器屏幕，将照射结果显示给用户”
+
+        3d相关属性：   。。。//放在对象元素的父元素里
+
+            perspective:相机离屏幕多远，单位px，值越大就越远 
+            perspective-origin:景深，基点位置，观察元素的角度
+            transform-origin: x y z
+            transform-style:3D空间  flat(默认值2D) preserve-3d(3d，产生一个三维空间)
+            backface-visibility：背面隐藏 (hidden,visibility) -当立体图形设置透明时，可设置此属性
+
+        transform3D相关属性:
+            rotateX :正值向上
+            rotateY ：正值向右
+            scaleZ ：立体元素厚度
+            translateZ ：正值向前，负值向后
+
+        3D写法：重点注意rotate3d写法
+
+    --CSS3背景图属性
+        background-size: cover/contain/设置具体长宽 
+                        (cover是等比放大，铺满整个容器，多余部分自动裁切掉
+                         contain是将图片整个放大直至某一方向撑满容器，可能会导致容器剩余空白部分)
+
+        -(理解下面两个属性之前先了解平铺background-repeat,平铺是以正常显示位置开始向四周平铺满图片，
+                background-origin相当于设置图片的正常显示位置)
+
+        background-origin: 背景图的填充位置
+            padding-box (默认)   默认填充包含padding在内，即填充区域为padding,content
+            border-box   填充包含边框在内，即填充区域为border,padding,content
+            content-box  填充只在content区域，即填充区域为content
+
+        background-clip:背景图裁切位置
+            具体值与background-origin相同
+            * 复合样式是第一个代表origin,第二个代表clip
+
+    --CSS渐变
+        1.线性渐变： linear-gradient作为值，添加在background-image属性上，用法示例：
+
+                    background-image:linear-gradient(to right bottom,green,blue);
+                        上面代表从左上到右下 进行 从绿到蓝的渐变，不写方向默认从正上方到正下方
+
+                或  background-image:linear-gradient(blue 25%, yellow 75%);
+                        上面代表从上到下 在 25%到75%之间进行从蓝到黄的渐变，而0-25%,75%-100%都是纯色!
+
+        2.径向渐变： radial-gradient
+
+    -- blur模糊与calc计算
+        1. blur模糊 略
+        2.calc计算
+            用法：width: calc(100% - 50px); 支持加减乘除
+
+    --column分栏布局
+        column-count 分栏个数
+        column-width 分栏的宽度
+        column-gap   分栏的间距
+        column-rule  分栏的边线
+        column-span  合并分栏
+
+        注：1.以上作为CSS属性应用即可。
+            2.分栏个数与宽度会冲突。
+
+    --伪类与伪元素
+        定义：CSS3规定伪类由一个冒号开始，然后为伪类的名称
+                而伪元素由两个冒号开始，然后为伪元素的名称
+
+        伪类： 伪类本质上是为了弥补常规CSS选择器的不足
+
+         例 :hover
+            :link
+            :focus
+
+        伪元素：伪元素本质上是创建了一个有内容的虚拟容器，该容器不包含任何DOM元素
+                但可以包含内容，开发者可以为其定制样式
+
+         例 ::after
+            ::before
+            ::selection
+
+    --CSS Hack
+      CSS Hack用来解决浏览器的兼容性问题
+
+        Hack的分类
+            1.CSS属性前缀法
+                _                   IE6
+                + / *               IE6 IE7
+                \9                  IE 6 7 8 9
+                \0                  IE 8 9 10 11
+
+            2.选择器前缀法
+            3.IE条件注释法
+
+    --IE低版本常见BUG：
+        1.opacity IE8及以下版本不识别
+        2.margin,浮动造成IE6下双边距问题
+            解决方案: _display:inline
+        3.IE6下最小高度为19px
+            解决：overflow:hidden
+        4.img边框问题
+
+
+
+    --网页布局
+
+        --等高布局：
+            父容器不设置高度，设置溢出隐藏overflow:hidden
+            通过浮动使两个子盒子同侧显示(display:inline-block影响最终效果,不使用)
+            左、右侧子盒子都设置margin-bottom:-555px;padding-bottom:555px;(具体数值自定)
+            左、右侧盒子高度都不具体设置
+
+                最终效果:
+                    一侧盒子高度随内容撑高，另一侧高度自动相同变化，实现两侧登高
+
+
+        --双飞翼布局、圣杯布局
+            

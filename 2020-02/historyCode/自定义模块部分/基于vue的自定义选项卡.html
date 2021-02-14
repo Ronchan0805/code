@@ -1,0 +1,232 @@
+<!-- 方案一：基于默认索引静态选项卡--非动态组件式写法 -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src="../cdnVue/vue.js"></script>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #mynav {
+            width: 500px;
+            margin: 0 auto;
+        }
+        #mynav .title {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid black;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .title ~ .content {
+            border:1px solid black;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+   <div id="mynav">
+       <div class="title" v-for="(item,itemid) in titlelist" @click='handleSelect(itemid)'
+       :style="(itemid == activeItem)? activeStyle : ''">
+           {{item}}
+       </div>
+       <div class="content" v-for="(content,contid) in contentlist" v-show="contid == activeItem">
+           {{content}}
+       </div>
+   </div>
+   <script>
+       new Vue({
+        el:'#mynav',
+        data:{
+            titlelist:['item1','item2','item3','item4'],
+            contentlist:['content1','content2','content3','content4'],
+            activeItem:0,
+            activeStyle:{
+                backgroundColor:"red"
+            }
+        },
+        methods:{
+            handleSelect(params){
+                this.activeItem = params;
+            }
+        }
+       })
+   </script>
+</body>
+</html> -->
+
+<!-- 基于后端数据的id做中间参数的选项卡--非动态组件式写法 -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src="../cdnVue/vue.js"></script>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #mynav {
+            width: 500px;
+            margin: 0 auto;
+        }
+        #mynav .title {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid black;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .title ~ .content {
+            border:1px solid black;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+   <div id="mynav"> <p>这里的key值设不设暂时效果没有影响</p>
+       <div class="title" v-for="item in barlist" :key="item.id" @click='handleSelect(item.id)'
+       :style="item.id == activeItem? activeStyle : ''">
+           {{item.type}}
+       </div>
+       <div class="content" v-for="cont in barlist" :key="cont.id+'1'" v-show="cont.id == activeItem">
+           {{cont.content}}
+       </div>
+   </div>
+   <script>
+       new Vue({
+        el:'#mynav',
+        data:{
+            barlist:[
+            {
+                id:101,
+                type:'可回收物',
+                content:'可回收物描述内容'
+            },
+            {
+                id:102,
+                type:'有害垃圾',
+                content:'有害垃圾描述内容'
+            },
+            {
+                id:103,
+                type:'湿垃圾',
+                content:'湿垃圾描述内容'
+            },
+            {
+                id:104,
+                type:'干垃圾',
+                content:'干垃圾描述内容'
+            }
+            ],
+            activeItem:101, 
+            //这里静态写成101,动态渲染时要想有默认选项应在生命周期中拿到barlist中的一项id负值给activeItem
+            activeStyle:{
+                backgroundColor:"red"
+            }
+        },
+        methods:{
+            handleSelect(params){
+                this.activeItem = params;
+            }
+        }
+       })
+   </script>
+</body>
+</html> -->
+
+<!-- 数据格式限制的选项卡--非动态组件式写法-->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src="../cdnVue/vue.js"></script>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #mynav {
+            width: 500px;
+            margin: 0 auto;
+        }
+        #mynav .title {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid black;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .title ~ .content {
+            border:1px solid black;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mynav">
+        <div class="title" v-for="(item,index) in datalist" @click="handleSelect(index)">{{item.type}}</div>
+        <div class="content">
+            {{childlist}}
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el:"#mynav",
+            data:{
+                datalist:[
+                {
+                    id:101,
+                    type:'可回收物',
+                    content:'可回收物描述内容'
+                },
+                {
+                    id:102,
+                    type:'有害垃圾',
+                    content:'有害垃圾描述内容'
+                },
+                {
+                    id:103,
+                    type:'湿垃圾',
+                    content:'湿垃圾描述内容'
+                },
+                {
+                    id:104,
+                    type:'干垃圾',
+                    content:'干垃圾描述内容'
+                }
+                ],
+                childlist:''
+            },
+            methods:{
+                handleSelect(index){
+                    this.childlist = this.datalist[index].content;
+                }
+            },
+            mounted(){
+                this.childlist = this.datalist[0].content;
+            }
+
+        })
+    </script>
+</body> -->

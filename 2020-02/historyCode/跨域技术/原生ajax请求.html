@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+function loadXMLDoc()
+{
+    var xhr;
+    if (window.XMLHttpRequest)
+    {
+        //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xhr=new XMLHttpRequest();
+    }
+    else
+    {
+        // IE6, IE5 浏览器执行代码
+        xhr=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhr.onreadystatechange=function()
+    {
+        if (xhr.readyState==4 && xhr.status==200)
+        {
+            document.getElementById("myDiv").innerHTML=xhr.responseText;
+        }
+    }
+    xhr.open("GET","https://m.maizuo.com/gateway?k=2507140",true);
+    xhr.setRequestHeader('X-Client-Info','{"a":"3000","ch":"1002","v":"5.0.4","e":"1579610124292057777497"}');
+    xhr.setRequestHeader('X-Host','mall.film-ticket.city.list');
+    xhr.send(null);
+}
+</script>
+</head>
+<body>
+
+<div id="myDiv">
+    兼容性创建XHR对象并初始化为xhr <br>
+    异步请求时xhr的readyState属性会由0变到4 <br>
+    每次改变都会调用一次xhr的onreadystatechange事件 <br> 
+    xhr.open('','',true); <br>
+    xhr.send(); <br>
+
+</div>
+<button type="button" onclick="loadXMLDoc()">修改内容</button>
+
+</body>
+</html>

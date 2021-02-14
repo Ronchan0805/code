@@ -1,0 +1,116 @@
+**标签分类查询文档，不涉及如何使用**
+**部分标签由于非常不兼容主流浏览器未注明**
+**标签参照W3C**
+**数据采集使用Firefox 74.0(64位)版本**
+
+1.块级元素-- block
+    特点：
+        独占一行；
+        不设置宽度时与父容器相同；
+        支持所有样式；
+
+    具体：
+        html
+        div
+        p
+        body
+        form
+        ul
+        li [浏览器里显示为list-item，但从表现看为块级元素]
+        dl
+        dt
+        dd
+        hr
+        address
+        article
+        main
+        menu
+        aside
+        section
+        blockquote
+        nav
+        center
+        dir
+        fieldset
+        figcaption
+        figure
+        h1 - h6
+        header
+        legend
+        ol
+        optgroup
+        pre
+
+
+2.行内元素-- inline
+    特点：
+        一行显示；
+        不支持width，height，margin，padding(有的部分支持)；
+        宽度由内容决定；
+        若两个标签在编辑器中用换行符换行，则浏览器显示时会在两个标签之间产生间隔；
+
+    具体：
+        a
+        span [margin-left和margin-right会生效]
+        img  [支持宽高和内外边距，与内联块元素特性相似]
+        abbr 
+        area
+        audio [加了controls属性后为inline，但特性与内联块相似]
+        video [加了controls属性后为inline，但特性与内联块相似]
+        b
+        i
+        iframe
+        bdo
+        big
+        br
+        canvas
+        cite
+        code
+        del
+        em
+        embed
+        font
+        footer
+        ins
+        label
+        map
+        mark
+        object
+        option
+        q
+        s
+        samp
+        small
+        strike
+        strong
+        sub
+        sup
+        textarea [特性与内联块相似]
+        u
+
+
+
+3.内联块元素-- inline-block
+    特点：
+        一行显示；
+        支持宽高；
+
+    具体：
+        input
+        button
+        select
+        progress
+
+--表现形式为块级：
+
+        表格内元素：
+            table
+            thead
+            tfoot
+            tbody
+            caption
+            tr
+            td
+            col
+            colgroup
+

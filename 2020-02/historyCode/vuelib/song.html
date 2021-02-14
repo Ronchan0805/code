@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src="../cdnVue/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style type="text/css">
+        a{
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <a v-for="data in list" :href="'http://jaymusic.gitee.io/jaymusic' + data.path" :download="data.title">{{data.title}}</a>
+        
+    </div>
+</body>
+<script>
+    new Vue({
+        el:"#box",
+        data:{
+            list:[]
+        },
+        mounted(){
+            axios('http://172.81.252.202:3000/proxy').then((res)=>{
+                this.list = res.data;
+            })
+        }
+    })
+</script>

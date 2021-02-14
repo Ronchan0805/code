@@ -12,21 +12,28 @@
 <body>
   <div id="app"></div>
   <script type="text/babel">
-    let arr = ['选项一','选项二','选项三'];
-    let active = 0;
-    function run () {
-      let dom = arr.map((item,index) => {
-        /*点击事件用驼峰命名法*/
-        return (
-          <p style={{color:active===index?'red':''}} key={index} onClick={() => {active=index;render()}}>{item}</p>
-        )
-      });
-      return dom;
+    // 父子组件
+    function ChildA () {
+      return (<p>孩子组件一</p>);
     }
-    function render () {
-      ReactDOM.render(run(),document.getElementById('app'));
+    function ChildB () {
+      return (<p>孩子组件二</p>);
     }
-    render();
+    function ChildC () {
+      return (<p>孩子组件三</p>);
+    }
+    function Parent () {
+      return (
+        <div>
+          <ChildA/>
+          <ChildB/>
+          <ChildC/>  
+        </div>
+      );
+    }
+    // 两种调用方式
+    ReactDOM.render(<Parent/>,document.getElementById('app'));
+    // ReactDOM.render(Parent(),document.getElementById('app'));
   </script>
 </body>
 </html>

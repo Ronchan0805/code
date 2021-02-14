@@ -1,0 +1,154 @@
+---flex弹性布局实现水平垂直居中
+    父盒子display:flex; 子盒子margin:auto;
+
+
+
+
+    概念： 采用 Flex 布局的元素，称为 Flex 容器（flex container），简称"容器"。它的所有子元素自动成为容器成员，称为 Flex 项目（flex item），简称"项目"。
+
+    父容器(display:flex)属性：
+
+        1.flex-direction ： 规定子元素的排列方向
+            row（默认值）：主轴为水平方向，起点在最左端。
+            row-reverse：主轴为水平方向，起点在最右端。
+            column：主轴为垂直方向，起点在最上沿。
+            column-reverse：主轴为垂直方向，起点在最下沿。
+
+        2.flex-wrap ： 
+            nowrap (默认值) : 单行显示，不换行
+            wrap :  宽度不足换行显示
+            wrap-reverse ： 宽度不足换行显示，但是从下往上显示(原本前面的盒子跑到最下层显示)
+
+            说明： 
+            a.默认单行显示不换行，当盒子过多父盒子宽度不足时，会自动调整子盒子宽度，直至内容过多无法调整最终一行内溢出。
+
+        3.flex-flow : flex-direction与flex-wrap的组合写法，第一个表示direction第二个表示wrap，中间用空格分隔
+
+        4.justify-content ： 决定了主轴方向上子项的对齐和分布方式(类似于word中的对齐排版)
+            flex-start（默认值）：左对齐
+            flex-end：右对齐
+            center： 居中
+            space-between：两端对齐，项目之间的间隔都相等。
+            space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+
+
+        5.align-items ： 定义项目在 交叉轴/侧轴 上如何对齐
+            flex-start：交叉轴的起点对齐。
+            flex-end：交叉轴的终点对齐。
+            center：交叉轴的中点对齐。
+            baseline: 项目的第一行文字的基线对齐。
+            stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+
+            说明： a.容器里的项目若不设置固定高度则由于align-items默认为stretch,
+                    视觉上会导致项目默认高度是撑满整个容器的，即100%。
+                    可通过设置项目固定高度或改变align-items的值来解决
+
+                  b.关于主轴和侧轴，我的理解为水平和垂直 或 垂直和水平。即
+                        主轴代表水平方向那侧轴就代表垂直方向，反之亦然
+
+
+        6.align-content ： 定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用
+            flex-start：表现为起始对齐
+            flex-end：表现为结束位置对齐
+            center：表现为居中对齐
+            space-between：表现为两端对齐，轴线之间的间隔平均分布。
+            space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
+            space-evenly：每一行元素都完全上下等分。
+            stretch（默认值）：轴线占满整个交叉轴。
+
+            说明：关于align-items和align-cotent容易混淆：
+                    前者多用于item在主轴上只有一行，而后者多用于item在主轴上存在多行.
+                    且在items由于容器宽度不足换行时，上下两个item之间会产生一大片间距，可通过align-content解决
+
+    子容器属性：
+        1.order ： 定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+
+        2.flex-grow ： 用于设置 item 在主轴方向上的拉伸系数，即如果 flex 容器还有剩余空间，会按照各 item 
+                       设置的拉伸系数拉伸item长度。默认值为 0，即不拉伸。
+
+                       个人理解：
+                            拉伸系数 * 容器主轴方向上空白长度 = 该item拉伸的长度
+
+                            或 几个item拉伸系数为1 2 1，则按1:2:1的比例拉伸item以平分主轴方向上空白长度
+
+
+        3.flex-shrink ： 用于设置 item 在主轴方向上的收缩因子，跟 flex-grow 刚好反着来，默认
+                         为1，值越大收缩倍数越大，0 表示不收缩，负值无效。
+                         另外，如果设置了换行属性，那么这个就无效了。
+
+        4.flex-basis ： 用于设置 items 在主轴方向的大小，如果主轴是水平方向，相当于设置 width，此时，该属性值会覆盖掉
+                        width 设置的大小。
+
+                        取值： flex-basis: <'width'> | auto(默认值)
+
+        5.flex ：  flex-grow，flex-shrink，flex-basis 三个属性的简化使用
+
+        6.align-self ： 用于给单个 item 设置交叉轴方向上的排版布局方式，属性值和作用跟 align-items 一样，区别仅在于 
+                        align-items 是 flex 容器的属性，它会作用于所有的 items 上；而 align-self 允许对单个 item 设置，该值会覆盖 align-items 设置的属性值。
+
+
+
+
+
+    移动端布局解决方案：
+       1. 移动端之viewport视口：
+                viewport仅针对移动端而言。
+                viewport中有两种视口： visual viewport(可视视口)和layout viewport(布局视口)
+                    可视视口默认与设备屏幕大小相同，布局视口默认值为980像素。
+                    不设置<meta name="viewport">，pc端页面在移动端被压缩，按布局视口980px显示。
+                    若做了移动端适配，需要设置此属性<meta name="viewport" content="width=device-width,initial-scale=1.0">，其中width等于设备宽度(按可视视口)。
+
+                综上： pc端页面尽量不要设置此属性，否则会在移动端显示非常难看。移动端需要。
+
+
+        2.移动端布局解决方案：
+            a. 百分比布局，也称流式布局
+                 原则：
+                    -文字流式
+                    -控件弹性flex
+                    -图片等比缩放scale
+
+
+            b. 等比缩放布局，也称rem布局
+                em：是一个相对单位，1em相当于当前元素或父元素的font-size值
+                rem：是一个相对单位，1rem等于根元素(html)的font-size值
+                vw/vh：把屏幕分为100份，1vw等于屏幕宽的1%
+                    (vw = 'visual width' vh = 'visual height')
+
+                设置font-size：
+                  首先要选定一个样式标准，这里以iphone6为例，iPhone 6 为375像素布局
+
+                    1.通过js
+                    document.documentElement.style.fontSize = document.documentElement.clientwidth/3.75 +'px'
+                    前面即html标签的style属性，后面代表设备宽除以一个值，计算得到html的font-size值
+                    font-size值动态得到，即可进行rem布局
+
+                    2.通过vw
+                        (无论是js还是vw，用100做中间换算基数较方便且常见，上面js就是设置font-size为100px)
+
+                            iphone 6 : 375px   1vw -> 3.75px
+
+                        设置html标签的font-size值为  100/3.75 = 26.6vw;
+
+
+                注意：要在body重置font-size：16px;
+
+
+
+        3.中小型网站一套代码适配双端方案：      
+        -响应式布局
+            概念：利用媒体查询，即media queries，可以针对不同的媒体类型定义不同的样式，从而实现响应式布局
+
+            基本语法：
+                @media all and (min-width:500px){
+                    /*CSS代码*/
+                }
+                注释：当屏幕宽度至少为500px，即大于500px时，执行以下CSS代码。
+                        其中all为触发响应式的设备，一般选择all所有就行
+
+            常见修改样式：
+                display
+                float
+                width
+
+                注：响应式代码要写到适配的CSS后面
