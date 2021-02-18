@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>无状态组件的props</title>
+  <script src="../node_modules/react/umd/react.development.js"></script>
+  <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+  <script src="../node_modules/babel-standalone/babel.min.js"></script>
+  <script src="../node_modules/prop-types/prop-types.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    // props是react组件对外接口，使用props可以从组件外部向组件内部进行数据传递
+    // 包括父组件向子组件的数据传递
+    // 注意：无论是无状态组件还是类组件，都不能修改自身的props
+
+    /*当传递的props较少时：*/
+    function Com (props) {
+      return (
+        <div>无状态组件，props的text数据为：{props.text}</div>
+      )
+    }
+    // ReactDOM.render(<Com text="我是props传递的数据"/>,document.getElementById('app'));
+    
+    /*当传递的props较多时：*/
+    let obj = {
+      text: '我是props的text数据',
+      num: 88,
+      date: '2000-01-01'
+    };
+    function MyCom (props) {
+      return (
+        <div>
+          这是props数据：
+          <ul>
+            <li>text：{props.text}</li>
+            <li>num: {props.num}</li>
+            <li>date: {props.date}</li>
+          </ul>
+        </div>
+      )
+    }
+    // 无状态组件的默认值设置
+    MyCom.defaultProps = {
+      text: '我是默认text',
+      num: '我是默认num',
+      date: '我是默认date'
+    }
+            /*
+              15.x React版本无状态组件默认值设置
+              function MyCom (props) {
+                props.text = props.text || '我是默认text'
+                ...
+                return (
+                  <div>
+                    这是props数据：
+                    <ul>
+                      <li>text：{props.text}</li>
+                      <li>num: {props.num}</li>
+                      <li>date: {props.date}</li>
+                    </ul>
+                  </div>
+                )
+              }
+            */
+            // props的类型验证：
+            // 1. 引用prop-types库    npm install --save prop-types  (仅仅打印错误，显示不会影响)
+            MyCom.propTypes = {
+              text: PropTypes.number,   // 验证text为Number类型
+              num: PropType.number.isRequired  // 验证num为Number类型且不为空
+            }
+    ReactDOM.render(<MyCom/>,document.getElementById('app'));
+
+
+    /*
+      1. 无状态组件（函数式组件）的props使用props.key
+      2. 类组件的props使用this.props.key
+    */
+  </script>
+</body>
+</html>

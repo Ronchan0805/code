@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类组件的props</title>
+  <script src="../node_modules/react/umd/react.development.js"></script>
+  <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+  <script src="../node_modules/babel-standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    class MyComponent extends React.Component{
+      // 类组件的默认值设置方式二
+      static defaultProps = {
+        text: '我是默认的text',
+        num: '我是默认num'
+      }
+      render () {
+        return (
+          <div>我是类组件,text:{this.props.text},num:{this.props.num}</div>
+        )
+      }
+    }
+    let obj = {
+      text: '我是props的text',
+      num: 88
+    }
+    // // 类组件的默认值设置方式一 （默认值验证同无状态组件）
+    // MyComponent.defaultProps = {
+    //   text: '我是默认text',
+    //   num: '我是默认num'
+    // }
+    ReactDOM.render(<MyComponent {...obj}/>,document.getElementById('app'));
+
+
+    /*
+      1. 无状态组件（函数式组件）的props使用props.key
+      2. 类组件的props使用this.props.key
+    */
+  </script>
+</body>
+</html>

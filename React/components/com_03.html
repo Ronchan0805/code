@@ -12,17 +12,15 @@
 <body>
   <div id="app"></div>
   <script type="text/babel">
-    // 无状态组件的定义 - 必须采用大驼峰命名,eg:RunFunc()
-    function Run () {
-      return (
-        <div>无状态组件</div>
-      );
+    // 创建类组件
+    class MyComponent extends React.Component{
+      render () {
+        return (
+          <div>类组件</div>
+        )
+      }
     }
-    let dom = (
-      <div>
-        <Run></Run><Run></Run>
-      </div>
-    );
+    let dom = <MyComponent></MyComponent>;
     ReactDOM.render(dom,document.getElementById('app'));
   </script>
 </body>
