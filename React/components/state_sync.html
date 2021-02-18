@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>state异步执行</title>
+  <script src="../node_modules/react/umd/react.development.js"></script>
+  <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+  <script src="../node_modules/babel-standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    // 只能使用类组件的声明方式使用state
+    class MyCom extends React.Component {
+
+      // ES6,constructor构造器
+      constructor (props) {
+        super(props)  // 指向父类的构造方法
+        this.state = {
+          name: '我是state的name',
+          num: 1,
+          str: "<p style='color:red;'>html字符串内容</p>"
+        }
+        // 绑定this到runAdd函数内
+        // 也可使用箭头函数定义runAdd=()=>{...}则无需绑定this
+        this.runAdd = this.runAdd.bind(this); 
+      }
+
+      // 定义函数
+      runAdd () {
+        /*修改状态的方法: this.setState({key:value}) ------ 该方法异步执行!!!*/
+        this.setState({
+          num: this.state.num + 1
+        });
+        console.log(`ready to ajax,num值:${this.state.num}`);
+      }
+
+      render () {
+        return (
+          <div>
+            
+            <h1>我是一个类组件:{this.state.name}</h1>
+
+            计数器num值：{this.state.num}
+            <button onClick={this.runAdd}>Click me</button>
+
+            <div>
+              <p>我是渲染的html字符串：</p>
+              <div dangerouslySetInnerHTML={{__html:this.state.str}}></div>
+            </div>
+
+          </div>
+        )
+      }
+
+    }
+    ReactDOM.render(<MyCom/>,document.getElementById('app'));
+
+
+
+    /*
+      异步方案： 回调
+      this.setState({
+        num: this.state.num +1
+      },() => {
+        console.log(`ready to ajax,num值:${this.state.num}`);
+      })
+    */
+  </script>
+</body>
+</html>
