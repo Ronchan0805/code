@@ -4,29 +4,35 @@
 
 class Des {
   constructor () {
-    this.name = 'ronchan';
-    this.age = 18;
+    this._name = 'ronchan';
+    this._age = 18;
   }
   getName () {
-    return this.name;
+    return this._name;
   }
   /* 无需逗号 */
   getAge () {
-    return this.age;
+    return this._age;
   }
 }
-
+let i = new Des();
+console.log(i.getName())
 // 添加一个方法
 Des.prototype.getMyInfo = function () {
-  console.log(`myname is ${ this.name } and myage is ${ this.age }`);
+  console.log(`myname is ${ this._name } and myage is ${ this._age }`);
 }
 // 添加多个方法
 Object.assign(Des.prototype, {
   setName(v) {
-    this.name = v;
+    this._name = v;
   },
   /* 逗号隔开 */
   setAge(v) {
-    this.age = v;
+    this._age = v;
   }
 })
+
+/**
+ *  1.类不存在变量提升
+ *  2.关于get和set函数见_class.js
+ */
