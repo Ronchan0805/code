@@ -8,7 +8,7 @@ function runCmdTest() {
             } else if (data) {
                 console.log('命令执行且test.js文件执行结果:',data);
             } else {
-                console.log('index.js中命令已执行');
+                console.log('index.js中命令已执行',stderr);
             }
         }
     );
