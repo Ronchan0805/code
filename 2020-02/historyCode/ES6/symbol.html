@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symbol-ES6</title>
+  <script>
+    // 3
+    let a = Symbol('abc');
+    let b = Symbol('abc');
+    console.log('3:',a === b); // false
+
+    // 5 
+    let vv = Symbol();
+    let obj = {
+      [vv]: 'hello world'
+    }
+    console.log(obj[vv]); // hello world （不能通过 . 访问）
+  </script>
+</head>
+<body>
+  1. JS数据类型: null, undefined, Boolean, Number, String, Object, Symbol
+  2. Symbol()函数用来确保一个独一无二的值，该值为Symbol类型
+  3. Symbol()内部可传递字符串参数做标识/描述，但即使参数一样，两个Symbol值也必然不同
+  4. Symbol值不可与其他类型值运算，但可通过toString()转换成字符串
+  5. Symbol用作属性名
+  6. Symbol用作属性名时不会被for...in循环，Object.keys()等方法遍历到
+  7. Object.getOwnPropertySymbols()方法可以得到所有对象内的Symbol值代表的属性，返回一个数组
+  8. Reflect.ownKeys()方法返回所有常规和非常规键名，返回一个数组
+  9. 与3不同，Symbol.for(str)方法查找是否有以str字符串做参数的Symbol值，有则返回该值，无则创建该值
+</body>
+</html>
