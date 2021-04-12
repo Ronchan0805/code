@@ -55,6 +55,9 @@ console.log('mis:',err.mis); // ReferenceError: ...
 // 获取子类继承的父类
 Object.getPrototypeOf(superStyle);  // Style;
 
+// Obeject.getPrototypeOf() 方法也可以用来获取实例的原型 替代 实例的_proto_方法,作用相同
+
+
 /* -------------------------------------- */
 /**
  *  super关键字:

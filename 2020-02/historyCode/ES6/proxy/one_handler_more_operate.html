@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一个拦截器多个操作</title>
+  <script>
+    /**
+     *  ES6中文文档里的解释
+     */
+    var handler = {
+      // get用于拦截对象属性的读取
+      get: function(target, name) {
+        if (name === 'prototype') {
+          return Object.prototype;
+        }
+        return 'Hello, ' + name;
+      },
+      // proxy实例作为函数使用时拦截执行 - 下方第一个fproxy作为函数调用
+      apply: function(target, thisBinding, args) {
+        return args[0];
+      },
+      // proxy实例作为构造函数（类）使用时拦截执行 - 下方第二个fproxy作为构造函数调用
+      construct: function(target, args) {
+        return {value: args[1]};
+      }
+    };
+    var fproxy = new Proxy(function(x, y) {
+      return x + y;
+    }, handler);
+    console.log('head:',fproxy(1, 2)); // 1
+    console.log('head:',new fproxy(1, 2)); // {value: 2}
+    console.log('head:',fproxy.prototype === Object.prototype); // true
+    console.log('head:',fproxy.foo === "Hello, foo"); // true
+  </script>
+</head>
+<body>
+  <script>
+    /**
+     *  更直观的解释
+     */
+    class Dep {
+      constructor () {
+        this.name = 'ronchan';
+      }
+    }
+    let d = new Dep();   //{name: ronchan}
+
+    /** 
+     *  这里的d是构造函数的实例，也就是一个普通的对象，如上打印结果可见 
+     *  这里的Proxy实例也就是p，p拦截的是一个对象，对 对象进行属性读取必然走get，与construct无关
+     */
+    let p = new Proxy(d,{
+      get: function (target, keyName) {
+        console.log('get函数拦截');
+        return 'hello world';
+      },
+      construct: function (target, args) {
+        console.log('construct函数拦截');
+        return {
+          name: 'RonChan'
+        }
+      }
+    });
+
+    /** 
+     *  这里的Dep是一个类（也就是一个构造函数）
+     *  这里的Proxy实例也就是P，P拦截的是一个构造函数，对 构造函数进行读取创建等操作必然走construct，与get无关
+     */
+    let P = new Proxy(Dep,{
+      get: function (target, keyName) {
+        console.log('get函数拦截');
+        return 'hello world';
+      },
+      construct: function (target, args) {
+        console.log('construct函数拦截');
+        return {
+          name: 'RonChan'
+        }
+      }
+    });
+    console.log(p.name); // get函数拦截   hello world
+    let f = new P(); // construct函数拦截
+    console.log(f.name); // RonChan
+
+    /* 更多API见https://es6.ruanyifeng.com/#docs/proxy */
+  </script>
+</body>
+</html>
