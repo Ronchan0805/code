@@ -35,12 +35,49 @@ let key = [1,2,3];
 map_02.set(key,'Helloworld');
 console.log('map_01的[1,2,3]值为:',map_02.get(key)); // Helloworld (用非基本类型做key时，注意key必须来源同一个实例)
 
-let map_03 = new Map([ ['name','ronchan'],['title','practice'] ]); // map数据结构也可调用数组的forEach方法
-map_03.forEach((val,key,map) => {
-  // do something
-})
+// let map_03 = new Map([ ['name','ronchan'],['title','practice'] ]); // map数据结构也可调用数组的forEach方法
+// map_03.forEach((val,key,map) => {
+//   // do something
+// })
 
 // map数据结构的set()和get()方法分别可用来设置和获取值
 // map数据结构可以和数组，对象，JSON相互转换
 // WeakMap 略
 
+
+/**
+ * set与数组相互转换
+ */
+// 数组 -> Set
+(function() {
+  let arr = [1,2,2,3];
+  console.log('数组->Set:',new Set(arr)); // Set { 1, 2, 3 }
+})();
+// Set -> 数组
+(function() {
+  console.log('Set->数组:',[...new Set( [1,2,2,3] )] ); // [ 1, 2, 3 ]
+})();
+
+
+/**
+ * map与对象相互转换
+ */
+// 对象 -> Map
+(function() {
+  let obj = {
+    name: 'ronchan',
+    age: 18
+  }
+  console.log('对象->Map:',new Map( Object.entries(obj) ) );
+})();
+// Map -> 对象
+(function() {
+  const myMap = new Map()
+    .set('yes', true)
+    .set('no', false);
+  let obj = Object.create(null);
+  for(let [k,v] of myMap) {
+    obj[k] = v;
+  }
+  console.log('Map->对象:',obj);  // { yes: true, no: false }
+})();
