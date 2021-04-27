@@ -1,0 +1,15 @@
+/* 微信浏览器环境-h5 */
+  1.字体相关属性不会继承
+
+  2.line-height文字垂直居中无效
+    内部放盒子用flex,内部放文字可不设高度,设置上下padding相同即可居中
+
+  3.多行文字文本溢出... (无需设置高度)
+  	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+
+
+/* 其他随记 */
+  1.两个盒子设置display:inline-block,高度不同会错位
