@@ -1,0 +1,43 @@
+.container {
+  padding: 0rpx 30rpx;
+}
+.item {
+  width: 100%;
+  padding: 36rpx 0;
+  position: relative;
+}
+.item .t {
+  margin-left: 30rpx;
+}
+.item .t .title {
+  margin-bottom: 12rpx;
+  font-size: 36rpx;
+  color: #333333;
+}
+.item .t .date {
+  font-size: 28rpx;
+  color: #666666;
+}
+.item .img {
+  width: 70rpx;
+  height: 80rpx;
+}
+.status {
+  position: absolute;
+  right: 0;
+}
+.success {
+  color: #36B336;
+}
+.fail {
+  color: #F73035;
+}
+
+
+
+
+/* Common */
+.flex {
+  display: flex;
+  align-items: center;
+}

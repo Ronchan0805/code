@@ -1,0 +1,11 @@
+<view class="container">
+  <view class="item flex">
+    <image class="img" src="http://172.81.252.202:6076/test/call.png"></image>
+    <view class="t">
+      <view class="title">一键呼叫</view>
+      <view class="date">2020/01/01 00:00:00</view>
+    </view>
+    <view class="status">呼叫成功</view>
+  </view>
+
+</view>
