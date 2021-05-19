@@ -1,57 +1,58 @@
-page {
+/* page {
   height: 100%;
 }
 .container {
-  padding: 60rpx 30rpx;
-  background-color: #F6F6F6;
   min-height: 100%;
-  overflow-y: scroll;
   box-sizing: border-box;
-  padding-bottom: 80rpx;
-}
-.item {
-  margin-bottom: 60rpx;
-}
-.item .date {
-  height: 20rpx;
-  line-height: 20rpx;
-  margin-bottom: 40rpx;
-  text-align: center;
-  font-size: 26rpx;
-  color: #999;
-}
-.item .content {
+  background-color: #F5F5F5;
+} */
+.header {
   width: 100%;
   background-color: #fff;
-  border-radius: 8rpx;
-  padding: 40rpx;
-  box-sizing: border-box;
 }
-.item .content .title {
+.head-wrap {
+  height: 252rpx;
+  margin: 30rpx;
+  background: linear-gradient(135deg, #3676F7 0%, #4387FD 100%);
+  border-radius: 15rpx;
+  position: relative;
+  overflow: hidden;
+}
+.head-wrap .use-jf {
+  margin: 56rpx 0 0 62rpx;
+}
+.head-wrap .use-jf .txt1 {
+  color: #fff;
+  font-size: 32rpx;
+  margin-bottom: 20rpx;
+}
+.head-wrap .use-jf .txt2 {
+  color: #fff;
+  font-size: 46rpx;
+}
+.head-wrap .img {
+  width: 140rpx;
+  height: 150rpx;
+  position: absolute;
+  top: 56rpx;
+  right: 62rpx;
+}
+.itemlist-title {
+  padding: 20rpx 36rpx;
+  background-color: #F5F5F5;
+  font-size: 32rpx;
   font-weight: bold;
-  font-size: 30rpx;
-  margin-bottom: 26rpx;
-}
-.item .content .cont {
-  color: #999;
-  font-size: 28rpx;
 }
 
 
-.more {
-  text-align: center;
-  color: #999;
-  font-size: 28rpx;
-}
-.nomore {
-  text-align: center;
-  color: #999;
-  font-size: 28rpx;
-}
-.loading {
+
+
+
+.flex {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  color: #999;
-  font-size: 28rpx;
+}
+.flex-between {
+  justify-content: space-between;
 }

@@ -1,15 +1,13 @@
 <view class="container">
-  <view wx:for="{{datalist}}" wx:key="id" class="item">
-    <view class="date">{{item.createDate}}</view>
-    <view class="content">
-      <view class="title">{{item.title}}</view>
-      <view class="cont">{{item.content}}</view>
+  <view class="header">
+    <view class="head-wrap">
+      <view class="use-jf">
+        <view class="txt1">可用积分</view>
+        <view class="txt2">3300</view>
+      </view>
+      <image class="img" src="../../images/database-jf.png"/>
     </view>
   </view>
-  <view class="more" wx:if="{{!isBottom && !isLoading}}">↓下拉加载更多</view>
-  <view class="loading" wx:if="{{isLoading}}">
-    <i></i>
-    加载中...
-  </view>
-  <view class="nomore" wx:if="{{isBottom}}">已经到底了</view>
+
+  <view class="itemlist-title">2021年3月</view>
 </view>
