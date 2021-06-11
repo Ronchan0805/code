@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>选项卡</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <style>
+      .active {
+        color: red;
+      }
+
+      .activatedOne {
+        width: 200px;
+        height: 200px;
+        background: #ccc;
+        border: 1px solid #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <div id="test">{{message}}</div>
+
+      <button @click="changeMsg">点击改变数据</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#box",
+        data: {
+          message: "我是更新前的数据"
+        },
+        methods: {
+          changeMsg () {
+            this.message = "我是更新后的数据";
+            console.log('vue data:',this.message,'----','DOM data', document.getElementById('test').textContent);
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
